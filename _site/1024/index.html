@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>1024 Magic Island</title>
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/public/stylesheets/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/public/stylesheets/screen.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+<div class="wrap"></div>
+<div class="top">
+  <div class="title">
+    <div class="signal"><a href="/">Words may be false. </a></div>
+    <div class="menu">
+      <dl><a class="extra" href="/home.html">Home</a></dl>
+      <dl id="posts" class="list maki">
+        <dt><a class="extra" href="/posts.html">Posts</a></dt>
+        <dd><a href="#">DtStruc</a></dd>
+        <dd><a href="#">Sicily</a></dd>
+        <dd><a href="#">JScripts</a></dd>
+        <dd><a href="#">Jquery</a></dd>
+      </dl>
+      <dl id="projects" class="list maki">
+        <dt><a class="extra" href="/projects.html">Projects</a></dt>
+        <dd><a href="/projects/green/index.html">Green</a></dd>
+        <dd><a href="/projects/dip/index.html">Dip</a></dd>
+      </dl>
+      <dl><a class="extra" href="/me.html">About Me</a></dl>
+    </div>
+  </div>
+</div>
+<div class="site">
+  <div class="content">
+  <div id="post">
+	<h1>1024 Magic Island</h1>
+	<p class="meta">04 Jan 2014 - Sysu, Guangzhou</p>
+	<p><strong>题目大意</strong>：</p>
+
+<p>图论，计算权值和最大的路径。</p>
+
+<p><strong>解题思路</strong>：</p>
+
+<p>遍历所有路径，计算权值和，找出最大值即可。</p>
+
+<p>惯例先吐槽：先用STL里的multimap写了一遍，实现思路较简明但是代码冗余太多。</p>
+
+<p>之后看了Mr.Liu的代码重写了一遍，代码轻快很多。</p>
+
+<p>遍历可以通过递归或者循环。</p>
+
+<p>判断当前节点是否被访问可以通过两种方法：</p>
+
+<p>1.定义结构体，保存visited信息</p>
+
+<p>2.路径初始化。计算每个节点间的距离。</p>
+
+<p>如果下一节点被访问过，到其的距离应比到当前节点的距离短。</p>
+
+<p>设置到所有节点距离初始值为INF，如果下一节点距离为INF，则大于当前节点距离，表示为未被访问过。</p>
+
+<p>最后算出到所有节点的最远距离取最大值。</p>
+
+<div class="highlight"><pre><code class="c"><span class="c1">// 1024. Magic Island</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;queue&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+
+<span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define INF 99999999</span>
+<span class="cp">#define N 10000</span>
+
+<span class="kt">int</span> <span class="n">d</span><span class="p">[</span><span class="n">N</span><span class="p">],</span><span class="n">best</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">[</span><span class="n">N</span><span class="p">],</span><span class="n">e</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="n">capital</span><span class="p">;</span>
+    
+    <span class="k">while</span><span class="p">(</span> <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">,</span><span class="o">&amp;</span><span class="n">capital</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EOF</span> <span class="p">){</span>
+        <span class="n">capital</span><span class="o">--</span><span class="p">;</span> 
+        <span class="n">fill</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">v</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">());</span>
+        <span class="n">fill</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">e</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">());</span>
+        
+        <span class="kt">int</span> <span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">){</span>
+            <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="n">start</span><span class="o">--</span><span class="p">,</span><span class="n">end</span><span class="o">--</span><span class="p">;</span>  <span class="c1">// num-1确保数组从0开始 </span>
+            <span class="n">v</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">end</span><span class="p">);</span>
+            <span class="n">v</span><span class="p">[</span><span class="n">end</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">start</span><span class="p">);</span>
+            <span class="n">e</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">e</span><span class="p">[</span><span class="n">end</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span> 
+        
+        <span class="n">fill</span><span class="p">(</span><span class="n">best</span><span class="p">,</span><span class="n">best</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">INF</span><span class="p">);</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">capital</span><span class="p">);</span>
+        <span class="n">best</span><span class="p">[</span><span class="n">capital</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span> <span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="p">){</span>
+            <span class="kt">int</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">[</span><span class="n">curr</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span> <span class="p">){</span>
+                <span class="kt">int</span> <span class="n">tmpv</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+                <span class="kt">int</span> <span class="n">tmpe</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+                <span class="c1">// 如果之前被访问，则best[curr] &gt; best[tmpv],不满足访问条件 </span>
+                <span class="k">if</span><span class="p">(</span> <span class="n">best</span><span class="p">[</span><span class="n">tmpv</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best</span><span class="p">[</span><span class="n">curr</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">tmpe</span><span class="p">]</span> <span class="p">){</span>
+                    <span class="n">best</span><span class="p">[</span><span class="n">tmpv</span><span class="p">]</span> <span class="o">=</span> <span class="n">best</span><span class="p">[</span><span class="n">curr</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">tmpe</span><span class="p">];</span>
+                    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">tmpv</span><span class="p">);</span>
+                <span class="p">}</span>    
+            <span class="p">}</span>   
+            <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span> 
+        <span class="p">}</span>
+        
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">max_element</span><span class="p">(</span><span class="n">best</span><span class="p">,</span><span class="n">best</span><span class="o">+</span><span class="n">n</span><span class="p">));</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>    
+<span class="p">}</span>
+</code></pre></div>
+
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>24 Jan 2014</span> &raquo; <a href="/TurnOverACard">Turn Over a Card</a></li>
+    
+      <li><span>23 Jan 2014</span> &raquo; <a href="/AmazingToggle">Amazing Toggle</a></li>
+    
+      <li><span>22 Jan 2014</span> &raquo; <a href="/CssProblem">Css Normal Problem</a></li>
+    
+  </ul>
+</div>
+  </div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Copyright  @有田十三<br />
+        NewComer  of  <a href="http://github.com/">GitHub</a><br />
+        yooungt13@gmail.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://weibo.com/yooungt/">weibo.com/yooungt</a><br />
+        <a href="http://github.com/yooungt13/">github.com/yooungt13</a><br />
+        <a href="http://blog.csdn.net/yooungt13/">blog.csdn.net/yooungt13</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/yooungt13"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:100;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!--*********************************************************-->
+<!--******************Copyright @有田十三********************-->
+<!--*********************************************************-->
+<script src="/public/javascripts/jquery.js" type="text/javascript"></script>
+<script src="/public/javascripts/makisu.js" type="text/javascript"></script>
+<script src="/public/javascripts/plugins.js" type="text/javascript"></script>
+<script src="http://js.tongji.linezing.com/3402426/tongji.js" type="text/javascript"></script>
+</body>
+</html>

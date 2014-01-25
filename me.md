@@ -12,23 +12,23 @@ Little exp of web development.
 <br>
 {% highlight css %}
 body{
-    background-position:Shanxi;      
-    height:174cm;
-    appearance:Awesome;
+    background-position: Shanxi;      
+    height: 174cm;
+    appearance: Awesome;
 }
 #job{
-    position:Guangzhou;
-    title:Sysu;
+    position: Guangzhou;
+    title: Sysu;
 }                               
-#kills{
-    javascript:90%;
-    javaweb:90%;
-    html5:70%;
-    css3:70%;   
-    android:70%;
+#skills{
+    javascript: 90%;
+    javaweb: 90%;
+    html5: 70%;
+    css3: 70%;   
+    android: 70%;
 }       
 #hobby{
-    content:"design,traveling,riding,NBA/NFL";
+    content: "design,traveling,riding,NBA/NFL";
 }      
 {% endhighlight %}
 

@@ -29,6 +29,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  padding-top: 3em;
+  margin-top: -1em;
   margin-bottom: 1em;
 }
 
@@ -62,6 +64,23 @@ table {
   font: 100%;
 }
 
+::-webkit-scrollbar-track-piece {
+  background-color: #f4f4f4;
+  -webkit-border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  height: 50px;
+  background-color: #000;
+  -webkit-border-radius: 2px;
+  outline-offset: -2px;
+}
+
 /*****************************************************************************/
 /*
 /* Home
@@ -70,7 +89,6 @@ table {
 
 ul.posts {
   list-style-type: none;
-  margin-bottom: 2em;
 }
 
   ul.posts li {
@@ -280,6 +298,10 @@ ul.posts {
 }
 
   /* standard */
+  #post h1 {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
 
   #post pre {
   }

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-   <title>Amazing Toggle</title>
+   <title>Scroll Bar</title>
 
    <!-- syntax highlighting CSS -->
    <link rel="stylesheet" href="/public/stylesheets/syntax.css" type="text/css" />
@@ -36,113 +36,54 @@
 <div class="site">
   <div class="content">
   <div id="post">
-	<h1>Amazing Toggle</h1>
-	<p class="meta">23 Jan 2014 - Sysu, Guangzhou</p>
-	<style type="text/css">
-	/* lists styles */
-	.lists {
+	<h1>Scroll Bar</h1>
+	<p class="meta">25 Jan 2014 - Sysu, Guangzhou</p>
+	<h2>webkit浏览器CSS设置滚动条</h2>
 
-	    -webkit-transform-style: preserve-3d;
-	    -moz-transform-style: preserve-3d;
-	    -ms-transform-style: preserve-3d;
-	    -o-transform-style: preserve-3d;
-	    transform-style: preserve-3d;
-	    
-	    text-transform: uppercase;
-	    margin-right: 2em;
-	}
+<p>主要有下面7个属性</p>
 
-	.lists a {
-	    text-decoration: none;
-	    display: block;
-	    color: #fff;
-	}
+<ol>
+<li>::-webkit-scrollbar              滚动条整体部分，可以设置宽度</li>
+<li>::-webkit-scrollbar-button       滚动条两端的按钮</li>
+<li>::-webkit-scrollbar-track        外层轨道</li>
+<li>::-webkit-scrollbar-track-piece  内层滚动槽</li>
+<li>::-webkit-scrollbar-thumb        滚动的滑块</li>
+<li>::-webkit-scrollbar-corner       边角</li>
+<li>::-webkit-resizer                定义右下角拖动块的样式</li>
+</ol>
 
-	.lists a:hover {
-	    text-indent: 20px;
-	}
 
-	.lists dt, .lists dd {
-	    text-indent: 10px;
-	    line-height: 55px;
-	    background: #000;
-	    margin: 0;
-	    height: 55px;
-	    width: 270px;
-	    color: #fff;
-	}
+<p>具体所指如图例
+<img src="/public/images/scrollbarparts.png" alt="img" /></p>
 
-	.lists dt {
-	    /* Since we're hiding elements behind here, we need it in 3d */
-	    -webkit-transform: translateZ(0.3px);
-	    -moz-transform: translateZ(0.3px);
-	    -ms-transform: translateZ(0.3px);
-	    -o-transform: translateZ(0.3px);
-	    transform: translateZ(0.3px);
+<p>实例(本站scrollbar)：</p>
 
-	    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-	    font-size: 15px;
-	}
+<div class="highlight"><pre><code class="css"><span class="o">:</span><span class="nd">:-webkit-scrollbar-track-piece</span> <span class="p">{</span>
+  <span class="k">background-color</span><span class="o">:</span> <span class="m">#f4f4f4</span><span class="p">;</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">2px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">:</span><span class="nd">:-webkit-scrollbar</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">8px</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">8px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">:</span><span class="nd">:-webkit-scrollbar-thumb</span> <span class="p">{</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="o">:</span> <span class="m">#000</span><span class="p">;</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">2px</span><span class="p">;</span>
+  <span class="k">outline</span><span class="o">-</span><span class="n">offset</span><span class="o">:</span> <span class="m">-2px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
-	.lists dd {
 
-	    border-top: 1px dashed rgba(255,255,255,0.3);
-	    line-height: 35px;
-	    font-size: 11px;
-	    height: 35px;
-	    margin: 0;
-	}
-
-	/* Individual styles */
-	.maki {
-	    -webkit-transform: perspective(600px) translateZ(1px) !important;
-	    -moz-transform: perspective(600px) translateZ(1px) !important;
-	    -ms-transform: perspective(600px) translateZ(1px) !important;
-	    -o-transform: perspective(600px) translateZ(1px) !important;
-	    transform: perspective(600px) translateZ(1px) !important;
-	}
-</style>
-<div style="width:100%; height: 19em;">
-<dl class="lists maki" style="float:left;">
-    <dt>Maki</dt>
-    <dd><a href="#">Ana-kyu</a></dd>
-    <dd><a href="#">Chutoro</a></dd>
-    <dd><a href="#">Kaiware</a></dd>
-    <dd><a href="#">Kampyo</a></dd>
-    <dd><a href="#">Kappa</a></dd>
-    <dd><a href="#">Natto</a></dd>
-    <dd><a href="#">Negitoro</a></dd>
-    <dd><a href="#">Oshinko</a></dd>
-    <dd><a href="#">Otoro</a></dd>
-    <dd><a href="#">Tekka</a></dd>
-</dl>
-<a href="#" class="toggle">Toggle</a>
-</div>
-
-<script src="/public/javascripts/jquery.js"></script>
-<script src="/public/javascripts/makisu.js"></script>
-<script>    // The `enabled` flag will be `false` if CSS 3D isn't available
-  var $maki = $( '.maki' );    // Create Makisus
-  $maki.makisu({
-      selector: 'dd',
-      overlap: 0.6,
-      speed: 0.85
-  });
-  // Open all            
-  $( '.lists' ).makisu( 'open' );    // Toggle on click
-  $( '.toggle' ).on( 'click', function() {
-      $( '.lists' ).makisu( 'toggle' );
-  });
-</script>
 </div>
 
 <div id="related">
   <h2>Related Posts</h2>
   <ul class="posts">
     
-      <li><span>25 Jan 2014</span> &raquo; <a href="/ScrollBar">Scroll Bar</a></li>
-    
       <li><span>24 Jan 2014</span> &raquo; <a href="/TurnOverACard">Turn Over a Card</a></li>
+    
+      <li><span>23 Jan 2014</span> &raquo; <a href="/AmazingToggle">Amazing Toggle</a></li>
     
       <li><span>22 Jan 2014</span> &raquo; <a href="/CssProblem">Css Normal Problem</a></li>
     

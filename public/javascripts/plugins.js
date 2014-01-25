@@ -23,9 +23,8 @@
 })();
 
 /** list open/toggle **/
-
-
 var $maki = $('.maki');
+
 // Create Makisus
 $maki.makisu({
   selector: 'dd',

@@ -6,19 +6,19 @@ title: Hello 13 | Catcher in the Rye
 	<ul class="posts">
 		<li><strong style="color:#ff0000;">[Top]</strong> &nbsp; <a href="howtonewblog.html">How to new blog();</a></li>
 	</ul>
-	<h1>Jquey + CSS</h1>
+	<h1 id="css">Jquey + CSS</h1>
 	<ul class="posts">
 		{% for post in site.tags.CSS %}
 			<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
 		{% endfor %}
 	</ul>
-	<h1>Sicily Notes</h1>
+	<h1 id="sicily">Sicily Notes</h1>
 	<ul class="posts">
 		{% for post in site.tags.Sicily %}
 			<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
 		{% endfor %}
 	</ul>
-	<h1>Data Structrue by JS</h1>
+	<h1 id="ds">Data Structrue by JS</h1>
 	<ul class="posts">
 		{% for post in site.tags.DataStructure %}
 			<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
